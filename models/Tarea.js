@@ -2,27 +2,19 @@ const { DataTypes } = require('sequelize');
 const { sequelize } = require('../db');
 
 // nombre, cod, estado, precio, stock
-const Producto = sequelize.define('Producto', {
+const Tarea = sequelize.define('Tarea', {
     // Model attributes are defined here
-    nombre: {
+    titulo: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    cod: {
-        type: DataTypes.STRING
-        // allowNull defaults to true
+    descripcion: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
     estado: {
-        type: DataTypes.BOOLEAN
-        // allowNull defaults to true
-    },
-    precio: {
-        type: DataTypes.FLOAT
-        // allowNull defaults to true
-    },
-    stock: {
-        type: DataTypes.INTEGER
-        // allowNull defaults to true
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
     },
     createdAt: {
         type: DataTypes.DATE,
@@ -43,7 +35,10 @@ const Producto = sequelize.define('Producto', {
     createdAt: true,
     updatedAt: true,
     deletedAt: true,
-    tableName: 'productos'
+    tableName: 'tareas'
 });
 
-module.exports = Producto;
+// Crear tabla si no existe
+//Tarea.sync();
+
+module.exports = Tarea;

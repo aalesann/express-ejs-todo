@@ -11,12 +11,16 @@ const {
 // ==========================================
 // Rutas para renderizar las vistas de tareas
 // ==========================================
+router.get('/tareas', (req, res) => {
+    res.render('tarea/index');
+});
+
 router.get('/tarea/editar/:id', (req, res) => {
-    res.render('editar_tarea', { id: req.params.id });
+    res.render('tarea/editar_tarea', { id: req.params.id });
 });
 
 router.get('/tarea/crear', (req, res) => {
-    res.render('crear_tarea');
+    res.render('tarea/crear_tarea');
 });
 
 // ==========================================

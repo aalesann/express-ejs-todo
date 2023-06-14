@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -11,122 +11,22 @@
 
 <body>
 
-
     <div class="container">
-        
         <div class="row mt-5">
-            <h1 class="text-center">Lista de Tareas</h1>
-            <div class="col">
-                <div class="col-md-2 mb-2">
-                    <a href="/tarea/crear" class="btn btn sm btn-primary" id>Crear </a>
-                </div>
-                <table class="table table-bordered table-striped text-center">
-                    <thead>
-                        <tr>
-                            <th>Titulo</th>
-                            <th>Descripción</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="listadoTareas">
-
-                    </tbody>
-                </table>
+            <div class="col-md-6 mx-auto">
+                <h1>Bienvenid@!!!</h1>
+                <h2>Seleccione un módulo</h2>
+                <hr>
+                <a href="/tareas" class="btn btn-outline-primary">Tareas</a>
+                <a href="/usuarios" class="btn btn-outline-success">Usuarios</a>
             </div>
         </div>
     </div>
 
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
-
-    <script>
-        const listadoTareas = document.querySelector('#listadoTareas');
-
-        const obtenerTareas = async () => {
-
-            try {
-                const res = await fetch('http://localhost:4000/api/tarea');
-
-                if (res.status === 404) {
-                    throw ({
-                        status: 404,
-                        message: 'No hay tareas'
-                    })
-                }
-
-                const data = await res.json();
-                return data;
-            } catch (error) {
-                console.log(error);
-                alert(error.message);
-            }
-
-
-        }
-
-        const eliminarTarea = async (event) => {
-            const id = event.target.dataset.id;
-
-            try {
-                const res = await fetch(`http://localhost:4000/api/tarea/${id}`, {
-                    method: 'DELETE'
-                });
-
-                const data = await res.json();
-
-                console.log(data);
-
-                alert(data.message);
-                window.location.reload();
-
-            } catch (error) {
-                console.log(error);
-                alert(error.message);
-            }
-
-        }
-
-        const mostrarTareas = (tareas) => {
-            tareas.forEach(tarea => {
-                listadoTareas.innerHTML += `
-                    <tr>
-                        <td>${tarea.titulo}</td>
-                        <td>${tarea.descripcion}</td>
-                        <td>
-                            <button onclick=eliminarTarea(event) class="btn btn-danger btn-sm" data-id="${tarea.id}">Eliminar</button>
-                            <a href="/tarea/editar/${tarea.id}" class="btn btn-warning btn-sm">Editar</a>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        // Obtener las tareas automáticamente cuando se carga la página
-        document.addEventListener('DOMContentLoaded', async () => {
-
-            console.log('DOM cargado')
-
-            try {
-                const tareas = await obtenerTareas();
-
-                if (!tareas || tareas.length === 0) {
-                    listadoTareas.innerHTML += `
-                        <tr>
-                            <td colspan="3">No hay tareas</td>
-                        </tr>
-                    `;
-                    return;
-                }
-
-                mostrarTareas(tareas);
-
-            } catch (error) {
-                console.log(error);
-                alert(error.message);
-            }
-        });
-    </script>
 </body>
 
 </html>

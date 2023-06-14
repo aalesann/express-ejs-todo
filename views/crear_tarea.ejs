@@ -14,9 +14,15 @@
 
     <div class="container mt-5">
         <div class="row">
-            <div class="mx-auto col-sm-12 col-md-6 col-lg-4 col-xl-3">
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="/" class="btn btn-sm btn-primary mb-3">Regresar</a>
+
+                </div>
+            </div>
+            <div class="mx-auto col-sm-9 col-md-6 col-lg-5 col-xl-4">
                 <form action="#" id="formNuevaTarea" class="rounded border p-3">
-                    <h3 class="mb-3 text-center">Nueva Tarea</h3>
+                    <h3 class="mb-3 text-center bg-primary text-light rounded p-2">Nueva Tarea</h3>
                     <div class="mb-3">
                         <label for="titulo" class="form-label">Titulo</label>
                         <input type="text" class="form-control" id="titulo" name="titulo">
@@ -25,7 +31,7 @@
                         <label for="descripcion" class="form-label">Descripción</label>
                         <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Crear</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
                 </form>
             </div>
         </div>
@@ -44,14 +50,17 @@
         formNuevaTarea.addEventListener('submit', async (e) => {
             e.preventDefault();
 
+            // Se obtienen los valores de cada input
             const titulo = document.querySelector('#titulo').value;
             const descripcion = document.querySelector('#descripcion').value;
 
+            // Se crea un objeto con los valores de los inputs
             const nuevaTarea = {
                 titulo,
                 descripcion
             }
 
+            // Se envia la peticion POST
             try {
                 const res = await fetch('http://localhost:4000/api/tarea', {
                     method: 'POST',
@@ -60,6 +69,7 @@
                     },
                     body: JSON.stringify(nuevaTarea)
                 });
+
 
                 if (res.status === 400) {
                     throw ({

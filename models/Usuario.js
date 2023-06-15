@@ -1,6 +1,5 @@
 const { sequelize, DataTypes } = require('../db');
 
-// nombre, cod, estado, precio, stock
 const Usuario = sequelize.define('Usuario', {
     // Model attributes are defined here
     username: {
@@ -44,4 +43,4 @@ const Usuario = sequelize.define('Usuario', {
 // Crear tabla si no existe
 //Usuario.sync();
 
-module.exports = Tarea;
+module.exports = Usuario;

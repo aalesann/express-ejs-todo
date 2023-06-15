@@ -20,6 +20,7 @@ DB_USER=
 DB_PASSWORD=
 DB_HOST=
 DB_PORT=
+DB_DIALECT=
 ```
 
 Ejecutar el proyecto en modo desarrollo:

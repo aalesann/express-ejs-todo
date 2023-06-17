@@ -41,6 +41,6 @@ const Usuario = sequelize.define('Usuario', {
 });
 
 // Crear tabla si no existe
-//Usuario.sync();
+Usuario.sync();
 
 module.exports = Usuario;

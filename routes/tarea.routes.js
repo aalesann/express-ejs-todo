@@ -6,6 +6,7 @@ const {
     actualizarTarea,
     eliminarTarea
 } = require('../controllers/tarea.controllers');
+const { validarJWT } = require('../middlewares/validar_jwt');
 
 
 // ==========================================
@@ -28,11 +29,11 @@ router.get('/tarea/crear', (req, res) => {
 // ==========================================
 
 
-router.get('/api/tarea', obtenerTareas);
+router.get('/api/tarea', [validarJWT],  obtenerTareas);
 
 router.get('/api/tarea/:id', obtenerTarea);
 
-router.post('/api/tarea', crearTarea);
+router.post('/api/tarea', [validarJWT], crearTarea);
 
 router.put('/api/tarea/:id', actualizarTarea);
 

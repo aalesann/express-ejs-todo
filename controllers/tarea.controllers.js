@@ -6,7 +6,8 @@ ctrlTarea.obtenerTareas = async (req, res) => {
     try {
         const tareas = await Tarea.findAll({
             where: {
-                estado: true
+                estado: true,
+                usuarioId: req.usuario.id
             }
         });
 
@@ -19,7 +20,9 @@ ctrlTarea.obtenerTareas = async (req, res) => {
 
         return res.json(tareas);
     } catch (error) {
-        return res.status(error.status || 500).json(error.message || 'Error interno del servidor');
+        return res.status(error.status || 500).json({
+            message: error.message || 'Error interno del servidor'
+        });
     }
 }
 
@@ -56,7 +59,8 @@ ctrlTarea.crearTarea = async (req, res) => {
     try {
         const tarea = await Tarea.create({
             titulo,
-            descripcion
+            descripcion,
+            usuarioId: req.usuario.id
         });
 
         if (!tarea) {
@@ -68,6 +72,7 @@ ctrlTarea.crearTarea = async (req, res) => {
 
         return res.json(tarea);
     } catch (error) {
+        console.log(error);
         return res.status(error.status || 500).json(error.message || 'Error interno del servidor');
     }
 }

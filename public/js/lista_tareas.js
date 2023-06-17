@@ -1,52 +1,67 @@
 const listadoTareas = document.querySelector('#listadoTareas');
 
-        const obtenerTareas = async () => {
-
-            try {
-                const res = await fetch('http://localhost:4000/api/tarea');
-
-                if (res.status === 404) {
-                    throw ({
-                        status: 404,
-                        message: 'No hay tareas'
-                    })
-                }
-
-                const data = await res.json();
-                return data;
-            } catch (error) {
-                console.log(error);
-                alert(error.message);
-            }
-
-
+const obtenerTareas = async () => {
+    const res = await fetch('http://localhost:4000/api/tarea', {
+        headers: {
+            'Authorization': localStorage.getItem('token')
         }
+    });
 
-        const eliminarTarea = async (event) => {
-            const id = event.target.dataset.id;
+    if(res.status === 404 ) {
+        return [];
+    }
 
-            try {
-                const res = await fetch(`http://localhost:4000/api/tarea/${id}`, {
-                    method: 'DELETE'
-                });
+    const data = await res.json();
+    return data;
+}
 
-                const data = await res.json();
+const eliminarTarea = async (event) => {
+    const id = event.target.dataset.id;
 
-                console.log(data);
+    try {
+        const res = await fetch(`http://localhost:4000/api/tarea/${id}`, {
+            method: 'DELETE'
+        });
 
-                alert(data.message);
-                window.location.reload();
+        const data = await res.json();
 
-            } catch (error) {
-                console.log(error);
-                alert(error.message);
-            }
+        console.log(data);
 
-        }
+        Swal.fire({
+            icon: 'success',
+            title: 'Tarea eliminada',
+            text: data.message,
+        });
+        
+        setTimeout(() => {
+            window.location.reload();
+        }, 2200);
 
-        const mostrarTareas = (tareas) => {
-            tareas.forEach(tarea => {
-                listadoTareas.innerHTML += `
+    } catch (error) {
+        console.log(error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: error.message,
+        })
+    }
+
+}
+
+const mostrarTareas = (tareas) => {
+
+    // Si no hay tareas, mostrar un mensaje
+    if(tareas.length === 0){
+        listadoTareas.innerHTML = `
+            <tr>
+                <td colspan="3" class="text-center">No hay tareas registradas</td>
+            </tr>
+        `;
+        return;
+    };
+
+    tareas.forEach(tarea => {
+        listadoTareas.innerHTML += `
                     <tr>
                         <td>${tarea.titulo}</td>
                         <td>${tarea.descripcion}</td>
@@ -56,30 +71,26 @@ const listadoTareas = document.querySelector('#listadoTareas');
                         </td>
                     </tr>
                 `;
-            });
-        }
+    });
+}
 
-        // Obtener las tareas automáticamente cuando se carga la página
-        document.addEventListener('DOMContentLoaded', async () => {
+// Obtener las tareas automáticamente cuando se carga la página
+document.addEventListener('DOMContentLoaded', async () => {
 
-            console.log('DOM cargado')
+    console.log('DOM cargado')
 
-            try {
-                const tareas = await obtenerTareas();
+    // Dentro de try se coloca el código que se quiere ejecutar
+    try {
+        const tareas = await obtenerTareas();     
+        mostrarTareas(tareas);
+    } catch (error) {  // Dentro de catch se coloca el código que se ejecutará en caso de que haya un error
+        console.log({ error });
 
-                if (!tareas || tareas.length === 0) {
-                    listadoTareas.innerHTML += `
-                        <tr>
-                            <td colspan="3">No hay tareas</td>
-                        </tr>
-                    `;
-                    return;
-                }
-
-                mostrarTareas(tareas);
-
-            } catch (error) {
-                console.log(error);
-                alert(error.message);
-            }
+        // Mensaje para el usuario
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: error.message,
         });
+    }
+});

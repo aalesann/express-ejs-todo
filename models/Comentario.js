@@ -1,18 +1,13 @@
 const { sequelize, DataTypes } = require('../db');
 
-const Tarea = sequelize.define('Tarea', {
-    // Model attributes are defined here
+const Comentario = sequelize.define('Comentario', {
     titulo: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     descripcion: {
         type: DataTypes.STRING,
-        allowNull: false
-    },
-    estado: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true
+        allowNull: false,
     },
     usuarioId: {
         type: DataTypes.INTEGER,
@@ -37,10 +32,10 @@ const Tarea = sequelize.define('Tarea', {
     createdAt: true,
     updatedAt: true,
     deletedAt: true,
-    tableName: 'tareas'
+    tableName: 'comentarios'
 });
 
 // Crear tabla si no existe
-Tarea.sync();
+Comentario.sync();
 
 module.exports = Tarea;

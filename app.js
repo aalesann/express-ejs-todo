@@ -41,6 +41,26 @@ sequelize.authenticate()
 // Configuración de rutas
 app.use(require('./routes/index.routes'));
 app.use(require('./routes/tarea.routes'));
+app.use(require('./routes/usuario.routes'));
+app.use(require('./routes/auth.routes'));
+
+// 404 - Not found
+app.use((req, res, next) => {
+    res.write(`<div>
+        <h1>404 - Ruta no encontrada</h1>
+        <hr>
+        <p>La pagina que intentas buscar no existe</p>
+        <p>Redireccionando a la página de inicio...</p>
+        <script>
+        (
+          () => setTimeout(() => {
+            window.location.href='http://localhost:${port}/tareas';
+           }, 3000)           
+        )();
+        </script>
+    </h1>`)
+});
+
 
 // Servidor en escucha de peticiones
 app.listen(port, console.log(`Servidor corriendo en http://localhost:${port}`));

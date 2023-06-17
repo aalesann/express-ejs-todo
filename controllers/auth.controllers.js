@@ -33,7 +33,7 @@ authCtrl.login = async (req, res) => {
         }
 
         // Generar el JWT
-        const token = await generarJWT(existeUsuario.id);
+        const token = await generarJWT(existeUsuario.id)
 
         res.json({
             message: 'Login correcto',

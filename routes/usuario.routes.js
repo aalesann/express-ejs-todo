@@ -1,4 +1,5 @@
 const { obtenerUsuarios, crearUsuario } = require('../controllers/usuario.controllers');
+const { validarJWT } = require('../middlewares/validar_jwt');
 
 const router = require('express').Router();
 
@@ -17,7 +18,7 @@ router.get('/usuario/nuevo', async (req, res) => {
 //         Rutas para CRUD de usuarios
 // ==========================================
 
-router.get('/api/usuarios/:id', obtenerUsuarios);
+router.get('/api/usuarios/', [validarJWT] , obtenerUsuarios);
 
 router.post('/api/usuario/', crearUsuario);
 

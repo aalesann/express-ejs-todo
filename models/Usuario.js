@@ -8,7 +8,11 @@ const Usuario = sequelize.define('Usuario', {
     },
     email: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: {
+            args: true,
+            messge: 'El email ya existe'
+        },
     },
     password: {
         type: DataTypes.STRING,

@@ -7,7 +7,7 @@ const generarJWT = (id) => {
 
         // Se firma el token
         jwt.sign(payload, process.env.SECRET_KEY, {
-            expiresIn: '1h',
+            expiresIn: '5h',
         }, (err, token) => {
             if (err) {
                 console.log(err);

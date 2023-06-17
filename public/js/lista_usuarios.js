@@ -2,9 +2,12 @@ const tablaUsuarios = document.querySelector('#listaUsuarios');
 
 // Función para obtener los usaurios
 const obtenerUsuarios = async () => {
+
+    const token =  localStorage.getItem('token')
+    console.log(token);
     const response = await fetch('http://localhost:4000/api/usuarios', {
         headers: {
-            'Authorization': localStorage.getItem('token')
+            'Authorization': token
         }
     });
 
@@ -51,6 +54,37 @@ const mostrarUsuarios = (usuarios) => {
     });
 
 };
+
+const eliminarUsuario = async (event) => {
+    const id = event.target.dataset.id;
+
+    try {
+        const res = await fetch(`http://localhost:4000/api/usuario/${id}`, {
+            method: 'DELETE'
+        });
+
+        const data = await res.json();
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Usuario eliminado',
+            text: data.message,
+        });
+        
+        setTimeout(() => {
+            window.location.reload();
+        }, 2200);
+
+    } catch (error) {
+        console.log(error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: error.message,
+        })
+    }
+
+}
 
 // Programar el evento cuando se carga toda la vista (sin los datos de usuarios)
 document.addEventListener('DOMContentLoaded', async () => {

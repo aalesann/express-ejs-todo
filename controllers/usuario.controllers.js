@@ -41,7 +41,7 @@ usuarioCtrl.crearUsuario = async (req, res) => {
 // Controlador para obtener todos los usuarios
 usuarioCtrl.obtenerUsuarios = async (req, res) => {
     try {
-        const usuarios = await Usuario.find({
+        const usuarios = await Usuario.findAll({
             where: {
                 estado: true,
             }

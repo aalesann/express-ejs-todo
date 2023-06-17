@@ -17,7 +17,9 @@ router.get('/tareas', (req, res) => {
 });
 
 router.get('/tarea/editar/:id', (req, res) => {
-    res.render('tarea/editar_tarea', { id: req.params.id });
+
+    const tareaId = req.params.id;
+    res.render('tarea/editar_tarea', { id: tareaId });
 });
 
 router.get('/tarea/crear', (req, res) => {

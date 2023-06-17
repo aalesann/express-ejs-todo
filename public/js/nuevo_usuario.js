@@ -17,21 +17,20 @@ formNuevoUsuario.addEventListener('submit', async (e) => {
         return;
     }
 
-    const data = {
-        username,
-        email,
-        password,
-    };
-
-    const response = await fetch('/api/usuario', {
+    const response = await fetch('http://localhost:4000/api/usuario', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+            username,
+            email,
+            password,
+        }),
     });
 
     const respToJson = await response.json();
+    
     if(response.status !== 201 && response.status !== 200) {
         Swal.fire({
             icon: 'error',

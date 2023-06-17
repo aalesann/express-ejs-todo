@@ -10,6 +10,11 @@ require('dotenv').config();
 // Se importa la instancia de conexión a la base de datos - (debe ser después de leer las variables de entorno)
 const { sequelize } = require('./db');
 
+// Se ejecuta una instancia de conexión a la base de datos
+sequelize.authenticate()
+    .then(() => console.log('Conexión a base de datos exitosa'))
+    .catch((error) => console.log('Error al conectar a base de datos', error));
+
 require('ejs');
 
 // Si no existe el archivo .env, el valor por defecto del puerto será 6000
@@ -32,11 +37,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Configuración de motor de plantillas EJS
 app.set('view engine', 'ejs');
-
-// Se ejecuta una instancia de conexión a la base de datos
-sequelize.authenticate()
-    .then(() => console.log('Conexión a base de datos exitosa'))
-    .catch((error) => console.log('Error al conectar a base de datos', error));
 
 // Configuración de rutas
 app.use(require('./routes/index.routes'));

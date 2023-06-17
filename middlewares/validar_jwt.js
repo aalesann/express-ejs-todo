@@ -5,7 +5,7 @@ const validarJWT = async (req, res, next) => {
     // Leer el token
     const token = req.header('Authorization');
 
-    if(!token) {
+    if (!token) {
         return res.status(401).json({
             message: 'No hay token en la petición',
         });
@@ -17,14 +17,14 @@ try {
         // Leer el usuario que corresponde al id
         const usuario = await Usuario.findByPk(id);
 
-        if(!usuario) {
+        if (!usuario) {
             return res.status(401).json({
                 message: 'Token no válido - usuario no existe en la base de datos',
             });
         }
 
         // Verificar si el usuario está activo
-        if(!usuario.estado) {
+        if (!usuario.estado) {
             return res.status(401).json({
                 message: 'Token no válido - usuario con estado: false',
             });
